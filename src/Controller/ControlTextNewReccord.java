@@ -1,3 +1,9 @@
+package Controller;
+
+import Controller.ControlNewReccord;
+import Model.Model;
+import Vue.VueNewReccord;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 

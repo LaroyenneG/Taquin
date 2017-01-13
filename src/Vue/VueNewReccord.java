@@ -1,3 +1,7 @@
+package Vue;
+
+import Model.Model;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -58,7 +62,7 @@ public class VueNewReccord extends JFrame {
         this.pseudoJTextField = new JTextField();
         this.okJButton = new JButton("   OK   ");
         this.cancelJButton = new JButton("Cancel");
-        this.coupeJButton = new JButton(new ImageIcon("src/coupe.png"));
+        this.coupeJButton = new JButton(new ImageIcon("resource/coupe.png"));
         this.titreJLabel = new JLabel("Felictations vous avez eu un meilleur score : " + this.formatTemps());
     }
 

@@ -1,3 +1,9 @@
+package Controller;
+
+import Controller.ControlButtonTheGrid;
+import Model.Model;
+import Vue.VueTheGrid;
+
 /**
  * Created by guillaume on 08/05/16.
  */

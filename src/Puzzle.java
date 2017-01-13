@@ -1,3 +1,6 @@
+import Controller.ControlGroupTheGrid;
+import Model.Model;
+
 import javax.swing.SwingUtilities;
 
 class Puzzle {

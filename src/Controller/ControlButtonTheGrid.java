@@ -1,3 +1,8 @@
+package Controller;
+
+import Model.Model;
+import Vue.VueTheGrid;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;

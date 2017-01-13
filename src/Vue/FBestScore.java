@@ -1,3 +1,5 @@
+package Vue;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -64,7 +66,7 @@ public class FBestScore extends JFrame {
         jPanel1_2_1.setBackground(Color.WHITE);
         jPanel1_2_2.setBackground(Color.WHITE);
         JLabel titreJLabel = new JLabel("Les meilleurs scores sont :");
-        JLabel imageJLabel = new JLabel(new ImageIcon("src/podium1.png"));
+        JLabel imageJLabel = new JLabel(new ImageIcon("resource/podium1.png"));
         Font titre = new Font("Arial", 1, 14);
         Font nom = new Font("Arial", 1, 12);
         Font button = new Font("Arial", 1, 12);

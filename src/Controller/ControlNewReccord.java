@@ -1,3 +1,8 @@
+package Controller;
+
+import Model.Model;
+import Vue.VueNewReccord;
+
 public abstract class ControlNewReccord {
     protected Model model;
     protected VueNewReccord vue;

@@ -1,3 +1,8 @@
+package Controller;
+
+import Model.Model;
+import Vue.VueTheGrid;
+
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 

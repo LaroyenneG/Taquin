@@ -1,3 +1,7 @@
+package Vue;
+
+import Model.Model;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -38,7 +42,7 @@ public class VueTheGrid extends JFrame {
    private JMenuItem itemT9;
    private JMenuItem aide;
 
-   VueTheGrid(Model model) {
+   public VueTheGrid(Model model) {
       this.model = model;
       this.initAttribut();
       this.creerWidget();
@@ -232,6 +236,6 @@ public class VueTheGrid extends JFrame {
    static {
       colorTextButton = Color.black;
       jButttonFont = new Font("Helvetica", 1, 20);
-      img = new ImageIcon("src/icon.png");
+      img = new ImageIcon("resource/icon.png");
    }
 }
