@@ -1,10 +1,9 @@
-package Controller;
+package Controler;
 
 import Model.Model;
-import Vue.VueTheGrid;
+import View.VueTheGrid;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public abstract class ControlTheGrid {
     Model model;
@@ -16,13 +15,13 @@ public abstract class ControlTheGrid {
     }
 
     public void checkWinner() {
-        if(this.model.getWinner()) {
+        if (this.model.getWinner()) {
             this.vue.getTimer().cancel();
             this.model.setJeuCommence(false);
             this.vue.controlFalse();
             JOptionPane dialog = new JOptionPane();
             JOptionPane.showMessageDialog(dialog, "Tu as gagné !!", "Bravo", 1);
-            if(this.model.estBestScorres(this.model.getTime())) {
+            if (this.model.estBestScorres(this.model.getTime())) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         new ControlGroupNewReccord(ControlTheGrid.this.model);

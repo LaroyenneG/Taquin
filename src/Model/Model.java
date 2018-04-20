@@ -1,14 +1,11 @@
 package Model;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import javax.swing.*;
+import java.io.*;
 import java.text.DecimalFormat;
-import javax.swing.JOptionPane;
 
 public class Model {
+    private final String nomFichier = "src/savePlayer.puzzle";
     private int[][] grid;
     private int[][] modelGrid;
     private boolean jeuCommence = false;
@@ -19,7 +16,6 @@ public class Model {
     private String[] sGrid;
     private boolean winner;
     private String nomPseudo = new String("");
-    private final String nomFichier = "src/savePlayer.puzzle";
 
     public Model() {
         this.newGrid(4);
@@ -29,8 +25,8 @@ public class Model {
         this.modelGrid = new int[taille][taille];
         int count = 1;
 
-        for(int y = 0; y < this.modelGrid.length; ++y) {
-            for(int x = 0; x < this.modelGrid[y].length; ++x) {
+        for (int y = 0; y < this.modelGrid.length; ++y) {
+            for (int x = 0; x < this.modelGrid[y].length; ++x) {
                 this.modelGrid[y][x] = count++;
             }
         }
@@ -44,8 +40,8 @@ public class Model {
         this.grid = new int[taille][taille];
         int count = 1;
 
-        for(int y = 0; y < this.grid.length; ++y) {
-            for(int x = 0; x < this.grid[y].length; ++x) {
+        for (int y = 0; y < this.grid.length; ++y) {
+            for (int x = 0; x < this.grid[y].length; ++x) {
                 this.grid[y][x] = count++;
             }
         }
@@ -58,12 +54,12 @@ public class Model {
         System.out.println(tab);
         System.out.println("[");
 
-        for(int y = 0; y < tab.length; ++y) {
+        for (int y = 0; y < tab.length; ++y) {
             System.out.print("[");
 
-            for(int x = 0; x < tab[y].length; ++x) {
+            for (int x = 0; x < tab[y].length; ++x) {
                 System.out.print(tab[y][x]);
-                if(x + 1 < tab[y].length) {
+                if (x + 1 < tab[y].length) {
                     System.out.print(", ");
                 }
             }
@@ -80,40 +76,36 @@ public class Model {
         int xcase = 0;
         int ycase = 0;
 
-        for(int y = 0; y < this.grid.length; ++y) {
-            for(int x = 0; x < this.grid[y].length; ++x) {
-                if(this.grid[y][x] == this.grid.length * this.grid.length) {
+        for (int y = 0; y < this.grid.length; ++y) {
+            for (int x = 0; x < this.grid[y].length; ++x) {
+                if (this.grid[y][x] == this.grid.length * this.grid.length) {
                     xvide = y;
                     yvide = x;
                 }
 
-                if(this.grid[y][x] == n) {
+                if (this.grid[y][x] == n) {
                     xcase = y;
                     ycase = x;
                 }
             }
         }
 
-        if(ycase == yvide && xvide == xcase + 1) {
+        if (ycase == yvide && xvide == xcase + 1) {
             return true;
-        } else if(ycase == yvide && xvide == xcase - 1) {
+        } else if (ycase == yvide && xvide == xcase - 1) {
             return true;
-        } else if(ycase == yvide + 1 && xvide == xcase) {
+        } else if (ycase == yvide + 1 && xvide == xcase) {
             return true;
-        } else if(ycase == yvide - 1 && xvide == xcase) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return ycase == yvide - 1 && xvide == xcase;
     }
 
     public void echanger(int n) {
-        if(this.peuxEchanger(n)) {
-            for(int y = 0; y < this.grid.length; ++y) {
-                for(int x = 0; x < this.grid[y].length; ++x) {
-                    if(this.grid[y][x] == this.grid.length * this.grid.length) {
+        if (this.peuxEchanger(n)) {
+            for (int y = 0; y < this.grid.length; ++y) {
+                for (int x = 0; x < this.grid[y].length; ++x) {
+                    if (this.grid[y][x] == this.grid.length * this.grid.length) {
                         this.grid[y][x] = n;
-                    } else if(this.grid[y][x] == n) {
+                    } else if (this.grid[y][x] == n) {
                         this.grid[y][x] = this.grid.length * this.grid.length;
                     }
                 }
@@ -125,12 +117,12 @@ public class Model {
     }
 
     private boolean estGagne() {
-        if(!this.jeuCommence) {
+        if (!this.jeuCommence) {
             return false;
         } else {
-            for(int y = 0; y < this.grid.length; ++y) {
-                for(int x = 0; x < this.grid[y].length; ++x) {
-                    if(this.grid[y][x] != this.modelGrid[y][x]) {
+            for (int y = 0; y < this.grid.length; ++y) {
+                for (int x = 0; x < this.grid[y].length; ++x) {
+                    if (this.grid[y][x] != this.modelGrid[y][x]) {
                         return false;
                     }
                 }
@@ -143,8 +135,8 @@ public class Model {
     private void melanger() {
         this.jeuCommence = false;
 
-        for(int i = 0; (double)i <= Math.pow(5.0D, (double)this.grid.length); ++i) {
-            int rand = (int)(Math.random() * (double)(this.grid.length * this.grid.length - 1 - 1 + 1)) + 1;
+        for (int i = 0; (double) i <= Math.pow(5.0D, (double) this.grid.length); ++i) {
+            int rand = (int) (Math.random() * (double) (this.grid.length * this.grid.length - 1 - 1 + 1)) + 1;
             this.echanger(rand);
         }
 
@@ -160,7 +152,7 @@ public class Model {
         this.chercher();
         String[] liste = new String[this.sNom.length];
 
-        for(int i = 0; i < this.sNom.length; ++i) {
+        for (int i = 0; i < this.sNom.length; ++i) {
             liste[i] = this.sNom[i] + " " + df.format(Double.parseDouble(this.sTemps[i]));
         }
 
@@ -170,12 +162,12 @@ public class Model {
     private String chercherBalise(char c, String tab) {
         String chaine = "";
 
-        for(int i = 0; i < tab.length(); ++i) {
+        for (int i = 0; i < tab.length(); ++i) {
             boolean t = false;
-            if(tab.charAt(i) == 60 && tab.charAt(i + 1) == c && tab.charAt(i + 2) == 62) {
+            if (tab.charAt(i) == 60 && tab.charAt(i + 1) == c && tab.charAt(i + 2) == 62) {
                 int var6 = i + 3;
-                if(var6 + 2 < tab.length()) {
-                    while(tab.charAt(var6) != 60 || tab.charAt(var6 + 1) != c || tab.charAt(var6 + 2) != 62 && var6 < tab.length()) {
+                if (var6 + 2 < tab.length()) {
+                    while (tab.charAt(var6) != 60 || tab.charAt(var6 + 1) != c || tab.charAt(var6 + 2) != 62 && var6 < tab.length()) {
                         chaine = chaine + tab.charAt(var6);
                         ++var6;
                     }
@@ -198,8 +190,8 @@ public class Model {
         this.chercher();
         int count = 0;
 
-        for(int i = 0; i < this.sTemps.length && i < 4; ++i) {
-            if(Double.parseDouble(this.sTemps[i]) < t || this.grid.length != Integer.parseInt(this.sGrid[i])) {
+        for (int i = 0; i < this.sTemps.length && i < 4; ++i) {
+            if (Double.parseDouble(this.sTemps[i]) < t || this.grid.length != Integer.parseInt(this.sGrid[i])) {
                 ++count;
             }
         }
@@ -210,11 +202,11 @@ public class Model {
     private void trierTab() {
         boolean trier = false;
 
-        while(!trier) {
+        while (!trier) {
             trier = true;
 
-            for(int i = 0; i < this.sTemps.length - 1; ++i) {
-                if(Double.parseDouble(this.sTemps[i]) > Double.parseDouble(this.sTemps[i + 1])) {
+            for (int i = 0; i < this.sTemps.length - 1; ++i) {
+                if (Double.parseDouble(this.sTemps[i]) > Double.parseDouble(this.sTemps[i + 1])) {
                     String path = this.sTemps[i];
                     String path2 = this.sNom[i];
                     String path3 = this.sGrid[i];
@@ -235,8 +227,8 @@ public class Model {
         int w = 0;
         int z = 0;
 
-        for(int q = 0; q < this.sListeUser.length; ++q) {
-            if(Integer.parseInt(this.chercherBalise('g', this.sListeUser[q])) == this.grid.length) {
+        for (int q = 0; q < this.sListeUser.length; ++q) {
+            if (Integer.parseInt(this.chercherBalise('g', this.sListeUser[q])) == this.grid.length) {
                 ++w;
             }
         }
@@ -245,8 +237,8 @@ public class Model {
         this.sTemps = new String[w];
         this.sGrid = new String[w];
 
-        for(int x = 0; x < this.sListeUser.length; ++x) {
-            if(Integer.parseInt(this.chercherBalise('g', this.sListeUser[x])) == this.grid.length) {
+        for (int x = 0; x < this.sListeUser.length; ++x) {
+            if (Integer.parseInt(this.chercherBalise('g', this.sListeUser[x])) == this.grid.length) {
                 this.sNom[z] = this.chercherBalise('n', this.sListeUser[x]);
                 this.sTemps[z] = this.chercherBalise('t', this.sListeUser[x]);
                 this.sGrid[z] = this.chercherBalise('g', this.sListeUser[x]);
@@ -262,13 +254,13 @@ public class Model {
         int nbUser = 0;
 
         int i;
-        for(i = 0; i < text.length(); ++i) {
-            if(text.charAt(i) == 60 && text.charAt(i + 1) == 117 && text.charAt(i + 2) == 62) {
+        for (i = 0; i < text.length(); ++i) {
+            if (text.charAt(i) == 60 && text.charAt(i + 1) == 117 && text.charAt(i + 2) == 62) {
                 ++count;
             }
         }
 
-        if(count % 2 == 0) {
+        if (count % 2 == 0) {
             nbUser = count / 2;
         } else {
             System.out.println("Error dans le fichier");
@@ -279,12 +271,12 @@ public class Model {
         count = 0;
         boolean t = false;
 
-        for(i = 0; i < text.length(); ++i) {
+        for (i = 0; i < text.length(); ++i) {
             t = false;
-            if(text.charAt(i) == 60 && text.charAt(i + 1) == 117 && text.charAt(i + 2) == 62) {
+            if (text.charAt(i) == 60 && text.charAt(i + 1) == 117 && text.charAt(i + 2) == 62) {
                 int var7 = i + 3;
-                if(var7 + 2 < text.length()) {
-                    while(text.charAt(var7) != 60 || text.charAt(var7 + 1) != 117 || text.charAt(var7 + 2) != 62 && var7 < text.length()) {
+                if (var7 + 2 < text.length()) {
+                    while (text.charAt(var7) != 60 || text.charAt(var7 + 1) != 117 || text.charAt(var7 + 2) != 62 && var7 < text.length()) {
                         chaine = chaine + text.charAt(var7);
                         ++var7;
                     }
@@ -305,8 +297,7 @@ public class Model {
         try {
             BufferedReader ex;
             String ligne;
-            for(ex = new BufferedReader(new FileReader("src/savePlayer.puzzle")); (ligne = ex.readLine()) != null; resultat = resultat + ligne) {
-                ;
+            for (ex = new BufferedReader(new FileReader("src/savePlayer.puzzle")); (ligne = ex.readLine()) != null; resultat = resultat + ligne) {
             }
 
             ex.close();
@@ -349,12 +340,12 @@ public class Model {
 
     public boolean savePlayer() {
         JOptionPane message = new JOptionPane();
-        if(this.nomPseudo.equals("")) {
+        if (this.nomPseudo.equals("")) {
             JOptionPane.showMessageDialog(message, "Le nom est vide", "Erreur", 0);
             return false;
         } else {
-            for(int i = 0; i < this.nomPseudo.length(); ++i) {
-                if(this.nomPseudo.charAt(i) == 60 || this.nomPseudo.charAt(i) == 62) {
+            for (int i = 0; i < this.nomPseudo.length(); ++i) {
+                if (this.nomPseudo.charAt(i) == 60 || this.nomPseudo.charAt(i) == 62) {
                     JOptionPane.showMessageDialog(message, "Caractere invalide", "Erreur", 0);
                     return false;
                 }
@@ -385,12 +376,16 @@ public class Model {
         return this.time;
     }
 
+    public void setTime(double t) {
+        this.time = t;
+    }
+
     public String getTimeFormat() {
         String nombreFormat = new String("");
         String nombre = new String(Double.toString(this.time));
 
         int i;
-        for(i = 0; i < nombre.length() && nombre.charAt(i) != 46; ++i) {
+        for (i = 0; i < nombre.length() && nombre.charAt(i) != 46; ++i) {
             nombreFormat = nombreFormat + nombre.charAt(i);
         }
 
@@ -409,10 +404,6 @@ public class Model {
 
     public boolean getWinner() {
         return this.winner;
-    }
-
-    public void setTime(double t) {
-        this.time = t;
     }
 
     private String getnom(int i) {

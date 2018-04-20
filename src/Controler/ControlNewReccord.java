@@ -1,7 +1,7 @@
-package Controller;
+package Controler;
 
 import Model.Model;
-import Vue.VueNewReccord;
+import View.VueNewReccord;
 
 public abstract class ControlNewReccord {
     protected Model model;
@@ -13,7 +13,7 @@ public abstract class ControlNewReccord {
     }
 
     protected void enregistrer() {
-        if(this.model.savePlayer()) {
+        if (this.model.savePlayer()) {
             this.vue.undisplay();
         } else {
             this.vue.display();

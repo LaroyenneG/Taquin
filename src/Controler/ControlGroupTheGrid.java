@@ -1,18 +1,17 @@
-package Controller;
+package Controler;
 
-import Controller.ControlButtonTheGrid;
 import Model.Model;
-import Vue.VueTheGrid;
+import View.VueTheGrid;
 
 /**
  * Created by guillaume on 08/05/16.
  */
 public class ControlGroupTheGrid {
 
-    private Model model;
-    private VueTheGrid vue;
     public ControlButtonTheGrid controlButton;
     public ControlMenuTheGrid controlMenu;
+    private Model model;
+    private VueTheGrid vue;
 
 
     public ControlGroupTheGrid(Model model) {
@@ -21,8 +20,8 @@ public class ControlGroupTheGrid {
 
         vue = new VueTheGrid(model);
 
-        controlButton = new ControlButtonTheGrid(model,vue);
-        controlMenu = new ControlMenuTheGrid(model,vue);
+        controlButton = new ControlButtonTheGrid(model, vue);
+        controlMenu = new ControlMenuTheGrid(model, vue);
 
 
     }

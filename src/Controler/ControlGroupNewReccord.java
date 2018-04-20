@@ -1,14 +1,13 @@
-package Controller;
+package Controler;
 
-import Controller.ControlButtonNewReccord;
 import Model.Model;
-import Vue.VueNewReccord;
+import View.VueNewReccord;
 
 public class ControlGroupNewReccord {
-    private Model model;
-    private VueNewReccord vue;
     public ControlButtonNewReccord controlButton;
     public ControlTextNewReccord controlText;
+    private Model model;
+    private VueNewReccord vue;
 
     public ControlGroupNewReccord(Model model) {
         this.model = model;

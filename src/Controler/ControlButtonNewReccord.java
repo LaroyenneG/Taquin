@@ -1,11 +1,11 @@
-package Controller;
+package Controler;
 
 import Model.Model;
-import Vue.VueNewReccord;
+import View.VueNewReccord;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 
 public class ControlButtonNewReccord extends ControlNewReccord implements ActionListener {
     private VueNewReccord vue;
@@ -17,7 +17,7 @@ public class ControlButtonNewReccord extends ControlNewReccord implements Action
     }
 
     public void actionPerformed(ActionEvent e) {
-        if(((JButton)e.getSource()).getText().equals("Cancel")) {
+        if (((JButton) e.getSource()).getText().equals("Cancel")) {
             this.vue.undisplay();
         } else {
             this.enregistrer();

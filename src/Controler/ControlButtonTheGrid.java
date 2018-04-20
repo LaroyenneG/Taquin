@@ -1,11 +1,11 @@
-package Controller;
+package Controler;
 
 import Model.Model;
-import Vue.VueTheGrid;
+import View.VueTheGrid;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 
 public class ControlButtonTheGrid extends ControlTheGrid implements ActionListener {
     private int numJButtonSelect;
@@ -17,11 +17,11 @@ public class ControlButtonTheGrid extends ControlTheGrid implements ActionListen
     }
 
     public void actionPerformed(ActionEvent e) {
-        if(!((JButton)e.getSource()).getText().equals("")) {
-            this.numJButtonSelect = Integer.parseInt(((JButton)e.getSource()).getText());
+        if (!((JButton) e.getSource()).getText().equals("")) {
+            this.numJButtonSelect = Integer.parseInt(((JButton) e.getSource()).getText());
             this.vue.actualizeGrid();
-            this.vue.jButtonSelect(((JButton)e.getSource()).getText());
-        } else if(this.numJButtonSelect != 0) {
+            this.vue.jButtonSelect(((JButton) e.getSource()).getText());
+        } else if (this.numJButtonSelect != 0) {
             this.model.echanger(this.numJButtonSelect);
             this.vue.actualizeGrid();
             this.checkWinner();
