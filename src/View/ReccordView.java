@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class VueNewReccord extends JFrame {
+public class ReccordView extends JFrame {
     private Model model;
     private JTextField pseudoJTextField;
     private JButton okJButton;
@@ -16,7 +16,7 @@ public class VueNewReccord extends JFrame {
     private JButton coupeJButton;
     private JLabel titreJLabel;
 
-    public VueNewReccord(Model model) {
+    public ReccordView(Model model) {
         this.model = model;
         this.initAttribut();
         this.creerWidget();

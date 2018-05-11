@@ -1,16 +1,16 @@
 package Controler;
 
 import Model.Model;
-import View.VueTheGrid;
+import View.GridView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ControlButtonTheGrid extends ControlTheGrid implements ActionListener {
+public class ControlButtonTheGrid extends ControlGrid implements ActionListener {
     private int numJButtonSelect;
 
-    public ControlButtonTheGrid(Model model, VueTheGrid vue) {
+    public ControlButtonTheGrid(Model model, GridView vue) {
         super(model, vue);
         vue.setButtonControler(this);
         this.numJButtonSelect = 0;

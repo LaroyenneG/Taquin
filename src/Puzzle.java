@@ -1,4 +1,4 @@
-import Controler.ControlGroupTheGrid;
+import Controler.ControlGroupGrid;
 import Model.Model;
 
 import javax.swing.*;
@@ -9,7 +9,7 @@ class Puzzle {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 Model model = new Model();
-                new ControlGroupTheGrid(model);
+                new ControlGroupGrid(model);
             }
         });
     }

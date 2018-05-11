@@ -1,13 +1,13 @@
 package Controler;
 
 import Model.Model;
-import View.VueNewReccord;
+import View.ReccordView;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class ControlTextNewReccord extends ControlNewReccord implements DocumentListener {
-    public ControlTextNewReccord(Model model, VueNewReccord vue) {
+public class ControlTextNewReccord extends ControlNewRecord implements DocumentListener {
+    public ControlTextNewReccord(Model model, ReccordView vue) {
         super(model, vue);
         vue.setTextControler(this);
     }
@@ -25,6 +25,6 @@ public class ControlTextNewReccord extends ControlNewReccord implements Document
     }
 
     protected void updateModel(DocumentEvent e) {
-        this.model.setnomPseudo(this.vue.getPseudo().getText());
+        this.model.setNomPseudo(this.view.getPseudo().getText());
     }
 }

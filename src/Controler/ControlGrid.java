@@ -1,15 +1,15 @@
 package Controler;
 
 import Model.Model;
-import View.VueTheGrid;
+import View.GridView;
 
 import javax.swing.*;
 
-public abstract class ControlTheGrid {
+public abstract class ControlGrid {
     Model model;
-    VueTheGrid vue;
+    GridView vue;
 
-    public ControlTheGrid(Model model, VueTheGrid vue) {
+    public ControlGrid(Model model, GridView vue) {
         this.model = model;
         this.vue = vue;
     }
@@ -21,10 +21,10 @@ public abstract class ControlTheGrid {
             this.vue.controlFalse();
             JOptionPane dialog = new JOptionPane();
             JOptionPane.showMessageDialog(dialog, "Tu as gagné !!", "Bravo", 1);
-            if (this.model.estBestScorres(this.model.getTime())) {
+            if (this.model.estBestScorers(this.model.getTime())) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new ControlGroupNewReccord(ControlTheGrid.this.model);
+                        new ControlGroupNewReccord(ControlGrid.this.model);
                     }
                 });
             }

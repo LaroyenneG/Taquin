@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class VueTheGrid extends JFrame {
+public class GridView extends JFrame {
     private static final Color colorcasevide = new Color(254, 254, 254);
     private static final Color colorcasenonvide = new Color(210, 210, 210);
     private static final Color colorcaseSelct = new Color(64, 154, 191);
@@ -37,12 +37,12 @@ public class VueTheGrid extends JFrame {
     private JMenuItem itemT9;
     private JMenuItem aide;
 
-    public VueTheGrid(Model model) {
+    public GridView(Model model) {
         this.model = model;
         this.initAttribut();
         this.creerWidget();
         this.setTitle("Puzzle");
-        this.setSize(300 + (model.getTaille() - 3) * 50, 345 + (model.getTaille() - 3) * 50);
+        this.setSize(300 + (model.getLen() - 3) * 50, 345 + (model.getLen() - 3) * 50);
         this.setIconImage(img.getImage());
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -52,9 +52,9 @@ public class VueTheGrid extends JFrame {
     }
 
     private void initAttribut() {
-        this.tabJButton = new JButton[this.model.getTaille()][this.model.getTaille()];
+        this.tabJButton = new JButton[this.model.getLen()][this.model.getLen()];
         this.temps = new JLabel("");
-        this.theGrid = new JPanel(new GridLayout(this.model.getTaille(), this.model.getTaille(), 3, 3));
+        this.theGrid = new JPanel(new GridLayout(this.model.getLen(), this.model.getLen(), 3, 3));
         this.item2 = new JMenuItem("Meilleurs scores");
         this.itemT3 = new JMenuItem("3 x 3");
         this.itemT4 = new JMenuItem("4 x 4");
@@ -98,8 +98,8 @@ public class VueTheGrid extends JFrame {
         this.showGrid();
         this.timer.schedule(new TimerTask() {
             public void run() {
-                VueTheGrid.this.model.setTime(VueTheGrid.this.model.getTime() + 0.1D);
-                VueTheGrid.this.temps.setText("Time : " + VueTheGrid.this.model.getTimeFormat() + " s");
+                GridView.this.model.setTime(GridView.this.model.getTime() + 0.1D);
+                GridView.this.temps.setText("Time : " + GridView.this.model.getTimeFormat() + " s");
             }
         }, 5L, 100L);
     }
@@ -127,11 +127,11 @@ public class VueTheGrid extends JFrame {
 
     private void createGrid() {
         int[][] modelGrid = this.model.getGrid();
-        this.tabJButton = new JButton[this.model.getTaille()][this.model.getTaille()];
+        this.tabJButton = new JButton[this.model.getLen()][this.model.getLen()];
 
-        for (int y = 0; y < this.model.getTaille(); ++y) {
-            for (int x = 0; x < this.model.getTaille(); ++x) {
-                if (modelGrid[y][x] == this.model.getTaille() * this.model.getTaille()) {
+        for (int y = 0; y < this.model.getLen(); ++y) {
+            for (int x = 0; x < this.model.getLen(); ++x) {
+                if (modelGrid[y][x] == this.model.getLen() * this.model.getLen()) {
                     this.tabJButton[y][x] = new JButton("");
                     this.tabJButton[y][x].setBackground(colorcasevide);
                 } else {
@@ -163,7 +163,7 @@ public class VueTheGrid extends JFrame {
 
         for (int y = 0; y < this.tabJButton.length; ++y) {
             for (int x = 0; x < this.tabJButton[y].length; ++x) {
-                if (modelGrid[y][x] == this.model.getTaille() * this.model.getTaille()) {
+                if (modelGrid[y][x] == this.model.getLen() * this.model.getLen()) {
                     this.tabJButton[y][x].setText("");
                     this.tabJButton[y][x].setBackground(colorcasevide);
                 } else {

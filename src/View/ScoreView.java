@@ -5,14 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FBestScore extends JFrame {
+public class ScoreView extends JFrame {
     private JLabel nom1JLabel;
     private JLabel nom2JLabel;
     private JLabel nom3JLabel;
     private JButton okJButton;
     private String[] tbWinner;
 
-    public FBestScore(String[] tbWinner) {
+    public ScoreView(String[] tbWinner) {
         this.tbWinner = tbWinner;
         this.setTitle("Best scores");
         this.initAttribut();
@@ -32,7 +32,7 @@ public class FBestScore extends JFrame {
         this.okJButton = new JButton("  OK  ");
         this.okJButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                FBestScore.this.setVisible(false);
+                ScoreView.this.setVisible(false);
             }
         });
     }

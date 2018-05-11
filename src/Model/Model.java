@@ -5,17 +5,17 @@ import java.io.*;
 import java.text.DecimalFormat;
 
 public class Model {
-    private final String nomFichier = "src/savePlayer.puzzle";
+
     private int[][] grid;
     private int[][] modelGrid;
     private boolean jeuCommence = false;
     private double time = 0.0D;
-    private String[] sListeUser;
+    private String[] sLiseUser;
     private String[] sNom;
     private String[] sTemps;
     private String[] sGrid;
     private boolean winner;
-    private String nomPseudo = new String("");
+    private String nomPseudo = "";
 
     public Model() {
         this.newGrid(4);
@@ -33,11 +33,12 @@ public class Model {
 
     }
 
-    public void newGrid(int taille) {
+    public void newGrid(int len) {
+        
         this.winner = false;
         this.jeuCommence = false;
         this.time = 0.0D;
-        this.grid = new int[taille][taille];
+        this.grid = new int[len][len];
         int count = 1;
 
         for (int y = 0; y < this.grid.length; ++y) {
@@ -46,31 +47,11 @@ public class Model {
             }
         }
 
-        this.newModelGrid(taille);
+        this.newModelGrid(len);
         this.melanger();
     }
 
-    private void showGrid(int[][] tab) {
-        System.out.println(tab);
-        System.out.println("[");
-
-        for (int y = 0; y < tab.length; ++y) {
-            System.out.print("[");
-
-            for (int x = 0; x < tab[y].length; ++x) {
-                System.out.print(tab[y][x]);
-                if (x + 1 < tab[y].length) {
-                    System.out.print(", ");
-                }
-            }
-
-            System.out.println("]");
-        }
-
-        System.out.println("]");
-    }
-
-    private boolean peuxEchanger(int n) {
+    private boolean canSwap(int n) {
         int xvide = 0;
         int yvide = 0;
         int xcase = 0;
@@ -100,7 +81,7 @@ public class Model {
     }
 
     public void echanger(int n) {
-        if (this.peuxEchanger(n)) {
+        if (this.canSwap(n)) {
             for (int y = 0; y < this.grid.length; ++y) {
                 for (int x = 0; x < this.grid[y].length; ++x) {
                     if (this.grid[y][x] == this.grid.length * this.grid.length) {
@@ -111,12 +92,12 @@ public class Model {
                 }
             }
 
-            this.winner = this.estGagne();
+            this.winner = this.isWin();
         }
 
     }
 
-    private boolean estGagne() {
+    private boolean isWin() {
         if (!this.jeuCommence) {
             return false;
         } else {
@@ -143,13 +124,9 @@ public class Model {
         this.jeuCommence = true;
     }
 
-    private int nbNom() {
-        return this.sNom.length;
-    }
-
     public String[] getListWinner() {
         DecimalFormat df = new DecimalFormat("0.#");
-        this.chercher();
+        this.find();
         String[] liste = new String[this.sNom.length];
 
         for (int i = 0; i < this.sNom.length; ++i) {
@@ -159,20 +136,19 @@ public class Model {
         return liste;
     }
 
-    private String chercherBalise(char c, String tab) {
-        String chaine = "";
+    private String findTag(char c, String tab) {
+        StringBuilder chaine = new StringBuilder();
 
         for (int i = 0; i < tab.length(); ++i) {
-            boolean t = false;
             if (tab.charAt(i) == 60 && tab.charAt(i + 1) == c && tab.charAt(i + 2) == 62) {
                 int var6 = i + 3;
                 if (var6 + 2 < tab.length()) {
-                    while (tab.charAt(var6) != 60 || tab.charAt(var6 + 1) != c || tab.charAt(var6 + 2) != 62 && var6 < tab.length()) {
-                        chaine = chaine + tab.charAt(var6);
+                    while (tab.charAt(var6) != 60 || tab.charAt(var6 + 1) != c || tab.charAt(var6 + 2) != 62) {
+                        chaine.append(tab.charAt(var6));
                         ++var6;
                     }
 
-                    return chaine;
+                    return chaine.toString();
                 }
             }
         }
@@ -180,14 +156,14 @@ public class Model {
         return "";
     }
 
-    private void chercher() {
-        String fichier = this.lireFicher();
-        this.chercherUser(fichier);
-        this.chercherWinner();
+    private void find() {
+        String file = this.readFile();
+        this.searchUser(file);
+        this.searchWinner();
     }
 
-    public boolean estBestScorres(double t) {
-        this.chercher();
+    public boolean estBestScorers(double t) {
+        this.find();
         int count = 0;
 
         for (int i = 0; i < this.sTemps.length && i < 4; ++i) {
@@ -223,25 +199,24 @@ public class Model {
 
     }
 
-    private void chercherWinner() {
+    private void searchWinner() {
         int w = 0;
         int z = 0;
 
-        for (int q = 0; q < this.sListeUser.length; ++q) {
-            if (Integer.parseInt(this.chercherBalise('g', this.sListeUser[q])) == this.grid.length) {
+        for (String aSLiseUser : this.sLiseUser)
+            if (Integer.parseInt(this.findTag('g', aSLiseUser)) == this.grid.length) {
                 ++w;
             }
-        }
 
         this.sNom = new String[w];
         this.sTemps = new String[w];
         this.sGrid = new String[w];
 
-        for (int x = 0; x < this.sListeUser.length; ++x) {
-            if (Integer.parseInt(this.chercherBalise('g', this.sListeUser[x])) == this.grid.length) {
-                this.sNom[z] = this.chercherBalise('n', this.sListeUser[x]);
-                this.sTemps[z] = this.chercherBalise('t', this.sListeUser[x]);
-                this.sGrid[z] = this.chercherBalise('g', this.sListeUser[x]);
+        for (String aSLiseUser : this.sLiseUser) {
+            if (Integer.parseInt(this.findTag('g', aSLiseUser)) == this.grid.length) {
+                this.sNom[z] = this.findTag('n', aSLiseUser);
+                this.sTemps[z] = this.findTag('t', aSLiseUser);
+                this.sGrid[z] = this.findTag('g', aSLiseUser);
                 ++z;
             }
         }
@@ -249,7 +224,7 @@ public class Model {
         this.trierTab();
     }
 
-    private void chercherUser(String text) {
+    private void searchUser(String text) {
         int count = 0;
         int nbUser = 0;
 
@@ -262,11 +237,9 @@ public class Model {
 
         if (count % 2 == 0) {
             nbUser = count / 2;
-        } else {
-            System.out.println("Error dans le fichier");
         }
 
-        this.sListeUser = new String[nbUser];
+        this.sLiseUser = new String[nbUser];
         String chaine = "";
         count = 0;
         boolean t = false;
@@ -281,7 +254,7 @@ public class Model {
                         ++var7;
                     }
 
-                    this.sListeUser[count] = chaine;
+                    this.sLiseUser[count] = chaine;
                     chaine = "";
                     ++count;
                     i = var7;
@@ -291,19 +264,19 @@ public class Model {
 
     }
 
-    private String lire() {
-        String resultat = "";
+    private String read() {
+
+        String result = "";
 
         try {
             BufferedReader ex;
             String ligne;
-            for (ex = new BufferedReader(new FileReader("src/savePlayer.puzzle")); (ligne = ex.readLine()) != null; resultat = resultat + ligne) {
-            }
+            for (ex = new BufferedReader(new FileReader("src/savePlayer.puzzle")); (ligne = ex.readLine()) != null; result = result + ligne)
+                ;
 
             ex.close();
-            return resultat;
+            return result;
         } catch (IOException var4) {
-            System.out.println("Error de lecture dans le fichier savePlayer.puzzle  <Laroyenne>");
             var4.printStackTrace();
             return "";
         }
@@ -320,21 +293,20 @@ public class Model {
             bufWriter.newLine();
             bufWriter.write(text);
             bufWriter.close();
-        } catch (IOException var14) {
-            System.out.println("Error d\'ecriture");
+        } catch (IOException ignored) {
         } finally {
             try {
+                assert bufWriter != null;
                 bufWriter.close();
                 fileWriter.close();
-            } catch (IOException var13) {
-                System.out.println("Error d\'ecriture");
+            } catch (IOException ignored) {
             }
 
         }
 
     }
 
-    public void ecrireFichier(String text) {
+    public void writeFile(String text) {
         this.ecrire(text);
     }
 
@@ -351,16 +323,16 @@ public class Model {
                 }
             }
 
-            this.ecrireFichier("<u><n>" + this.nomPseudo + "<n><t>" + Double.toString(this.time) + "<t><g>" + Integer.toString(this.grid.length) + "<g><u>");
+            this.writeFile("<u><n>" + this.nomPseudo + "<n><t>" + Double.toString(this.time) + "<t><g>" + Integer.toString(this.grid.length) + "<g><u>");
             return true;
         }
     }
 
-    public String lireFicher() {
-        return this.lire();
+    public String readFile() {
+        return this.read();
     }
 
-    public void setnomPseudo(String text) {
+    public void setNomPseudo(String text) {
         this.nomPseudo = text;
     }
 
@@ -381,8 +353,8 @@ public class Model {
     }
 
     public String getTimeFormat() {
-        String nombreFormat = new String("");
-        String nombre = new String(Double.toString(this.time));
+        String nombreFormat = "";
+        String nombre = Double.toString(this.time);
 
         int i;
         for (i = 0; i < nombre.length() && nombre.charAt(i) != 46; ++i) {
@@ -394,7 +366,7 @@ public class Model {
         return nombreFormat;
     }
 
-    public int getTaille() {
+    public int getLen() {
         return this.grid.length;
     }
 
@@ -404,17 +376,5 @@ public class Model {
 
     public boolean getWinner() {
         return this.winner;
-    }
-
-    private String getnom(int i) {
-        return this.sNom[i];
-    }
-
-    private String gettemps(int i) {
-        return this.sTemps[i];
-    }
-
-    private String getgrid(int i) {
-        return this.sGrid[i];
     }
 }
